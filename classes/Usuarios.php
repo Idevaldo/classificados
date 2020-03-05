@@ -7,6 +7,26 @@ class Usuarios {
     private $senha;
     private $telefone;
 
+    public function __construct($id = null){
+        global $pdo;
+
+        if (!empty($id)) {
+            $sql = "SELECT * FROM usuarios WHERE id = :id";
+            $sql = $pdo->prepare($sql);
+            $sql->bindValue(':id', $id);
+            $sql->execute();
+            
+            if ($sql->rowCount() == 1) {
+                $dados = $sql->fetch();
+
+                $this->nome = $dados['nome'];
+                $this->email = $dados['email'];
+                $this->senha = $dados['senha'];
+                $this->telefone = $dados['telefone'];
+            }
+        }
+    }
+    
     public function getId(){
         return $this->id;
     }

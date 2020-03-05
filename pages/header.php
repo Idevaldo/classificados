@@ -1,4 +1,13 @@
-<?php require_once 'config.php'; ?>
+<?php 
+require_once 'config.php'; 
+require_once 'classes/Usuarios.php';
+if (!empty($_SESSION['idUsuario'])) {
+    $usuario = new Usuarios($_SESSION['idUsuario']);
+    $primeiroNome = $usuario->getNome();
+    $primeiroNome = explode(' ', $primeiroNome);
+    $primeiroNome = $primeiroNome[0];
+}
+?>
 <!doctype html>
 <html lang="pt-br">
 
@@ -17,7 +26,6 @@
 </head>
 
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="index.php">Classificados</a>
 
@@ -25,7 +33,7 @@
 
             <form class="form-inline my-2 my-lg-0 ">
                 <?php if (!empty($_SESSION['idUsuario'])) : ?>
-                <a href="meus-anuncios.php" class="btn btn-primary mr-1">Meus anúncios</a>
+                <a href="meus-anuncios.php" class="btn btn-primary mr-1">Anúncios de <?php echo $primeiroNome;?></a>
                 <a href="sair.php" class="btn btn-primary ml-1">Sair</a>
                 <?php else : ?>
                 <a href="cadastre-se.php" class="btn btn-primary mr-1">Cadastre-se</a>
@@ -34,4 +42,4 @@
             </form>
         </div>
     </nav>
-
+    
